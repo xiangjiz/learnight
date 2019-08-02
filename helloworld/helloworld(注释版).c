@@ -14,7 +14,7 @@
 #define TRANSPARENT_COLOR		MakeRGBA(0x00,0x00,0x00,0x00)   //定义TRANSPARENT_COLOR参数表示透明色
 
 
-#define IDC_PROG_NAME				0x1001   
+#define IDC_PROG_NAME				0x1001   //大概是端口设置
 #define IDC_DATE_TIME				0x1002   
 #define IDC_HEART_BEAT			0x1003     
 #define IDC_VERSION_INFO		0x1004
@@ -27,41 +27,43 @@
 
 
 static CTRLDATA ctrl_main_window[] =    //结构 CTRLDATA 用来定义控件,DLGTEMPLATE 用来定义对话框本身。应该先用CTRLDATA定义对话框中所有控件, 
-{                                       //用数组表示控件 在 该数 组 中 的顺序,也就是对话框中用户按 TAB 键时的控件切换顺序。
+{                                       //用数组表示控件在该数组中的顺序,也就是对话框中用户按 TAB 键时的控件切换顺序。
     {                                   //然后定义对话框,指定对话框中的控件数目,并指定 DLGTEMPLATE 结构中的 controls 指针 指向定义控件的数组。
-		"static",                                              
-		WS_VISIBLE | SS_CENTER | SS_NOPREFIX | SS_NOWORDWRAP,
-		10, 10, 100, 20,
-		IDC_PROG_NAME,
-		"DOOR SYSTEM",
-		0,
+		"static",                       //静态框控件，宏定义  CTRL_STATIC                   
+		WS_VISIBLE | SS_CENTER | SS_NOPREFIX | SS_NOWORDWRAP,  //创建初始可见的窗口；可显示多行的静态框，中对齐显示文本；
+		//	   禁止对字符“&”进行解释，通常字符“&”会被解释成在下一个字符加一个下画线，“&&”会被解释成一个字符“&”，用户可以使用SS_NOPREFIX风格来禁止这项解释；
+		// 超过控件宽度部份将被截去，不进行自动换行处理。                                                   
+		10, 10, 100, 20,     //(x,y,w,h)
+		IDC_PROG_NAME,       //控件的标识符
+		"DOOR SYSTEM",       //显示内容
+		0,                   //参数 add_data 用来向控件传递其特有数据的指针,该指针所指向的数据结构随控件类的不同而不同，0
 	},
 
 	// 显示时间
 	{
 		"static",
-		WS_VISIBLE | SS_SIMPLE | SS_NOPREFIX | SS_NOWORDWRAP,
-		300, 50, 180, 20,
-		IDC_DATE_TIME,
+		WS_VISIBLE | SS_SIMPLE | SS_NOPREFIX | SS_NOWORDWRAP, // ；用来显示单行文本，永远左对齐不会自动换行；；；
+		300, 50, 180, 20,            //（x,y,w,h）
+		IDC_DATE_TIME,             //时间
 		//"2019-01-01 00:00:00 MON",
-		"2019-01-01 00:00:00 星期天",
-		WS_EX_TRANSPARENT | WS_EX_AUTOSECONDARYDC,
+		"2019-01-01 00:00:00 星期天",      //初始显示时间
+		WS_EX_TRANSPARENT | WS_EX_AUTOSECONDARYDC,  //使窗口透明无法接收操作 | 窗口自动双缓冲刷新
 	},
 
 	// 心跳标志
 	{
 		"static",
 		WS_VISIBLE | SS_SIMPLE | SS_NOPREFIX | SS_NOWORDWRAP,
-		10, 750, 100, 40,
+		10, 750, 100, 40,          //(x,y,w,h)
 		IDC_HEART_BEAT,
-		"OK",
-		WS_EX_TRANSPARENT,
+		"OK",                      //初始显示OK
+		WS_EX_TRANSPARENT,          //使窗口透明无法接收操作
 	},
 
 	// IP地址
 	{
 		"static",
-		WS_VISIBLE | SS_SIMPLE | SS_NOPREFIX | SS_NOWORDWRAP,
+		WS_VISIBLE | SS_SIMPLE | SS_NOPREFIX | SS_NOWORDWRAP,    
 		200, 750, 100, 40,
 		IDC_IP_INFO,
 		"192.168.1.100",
@@ -92,8 +94,8 @@ static CTRLDATA ctrl_main_window[] =    //结构 CTRLDATA 用来定义控件,DLG
 	},
 	//编辑框
 	{
-		"sledit",
-		WS_VISIBLE | WS_TABSTOP | WS_BORDER,
+		"sledit",     //控件类型查看mini里的控件png，这条表示单行编辑框，宏定义CTRL_SLEDIT，多行编辑框mledit
+		WS_VISIBLE | WS_TABSTOP | WS_BORDER,  //；用户可以通过使用Tab键移动，TAB键移动到下一个有WS_TABSTOP标志的控件；创建一个有边框的窗口
 		130, 40, 199, 30,
 		IDC_EDT_ADDR,
 		"",
@@ -101,14 +103,14 @@ static CTRLDATA ctrl_main_window[] =    //结构 CTRLDATA 用来定义控件,DLG
 	}
 };
 
-static DLGTEMPLATE dialog_main_window =
+static DLGTEMPLATE dialog_main_window =   //定义对话框模板dialog_main_window
 {
 	WS_VISIBLE,
-	WS_EX_NONE | WS_EX_AUTOSECONDARYDC,
-	0/*656*/, 0, 608, 1080,
+	WS_EX_NONE | WS_EX_AUTOSECONDARYDC,   //窗口无扩展风格 | 窗口自动双缓冲刷新
+	0/*656*/, 0, 608, 1080,       （x,y,w,h）
 	"",
 	0, 0,
-	sizeof(ctrl_main_window)/sizeof(ctrl_main_window[0]), ctrl_main_window,
+	sizeof(ctrl_main_window)/sizeof(ctrl_main_window[0]), ctrl_main_window,    
 	0
 };
 
